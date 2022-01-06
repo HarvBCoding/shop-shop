@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
-import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
+// import { useStoreContext } from '../../utils/GlobalState';
+// import { UPDATE_PRODUCTS } from '../../utils/actions';
+import { useSelector, createSelector, useDispatch } from 'react-redux';
+import { updateProducts } from '../../utils/slice';
 
 import ProductItem from '../ProductItem';
 import { QUERY_PRODUCTS } from '../../utils/queries';
@@ -11,9 +13,12 @@ import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
   // execute the useStoreContext() function to retrieve the current global state object
-  const [state, dispatch] = useStoreContext();
+  // const [state, dispatch] = useStoreContext();
   // destructure the currentCategory data out of the state object
-  const { currentCategory } = state;
+  // const { currentCategory } = state;
+  const currentCategory = useSelector(state => state.currentCategory)
+  const products = useSelector(state => state.products)
+  const dispatch = useDispatch()
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
@@ -21,10 +26,7 @@ function ProductList() {
     // if there's data to be stored
     if (data) {
       // let's store it in the global state object
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products
-      });
+      dispatch(updateProducts(data.products))
       // but let's also take each product & save it to IndexedDB using the helper function
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
@@ -34,26 +36,23 @@ function ProductList() {
       // since offline, get all of the data from the 'products' store
       idbPromise('products', 'get').then((products) => {
         // use retrieved data to set global state for offline browsing
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products
-        });
+        dispatch(updateProducts(products));
       });
     }
   }, [data, loading, dispatch]);
   
   function filterProducts() {
     if (!currentCategory) {
-      return state.products;
+      return products;
     }
 
-    return state.products.filter(product => product.category._id === currentCategory);
+    return products.filter(product => product.category._id === currentCategory);
   }
 
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {state.products.length ? (
+      {products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
