@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { pluralize } from "../../utils/helpers";
 import { idbPromise } from "../../utils/helpers";
 
-import { useStoreContext } from '../../utils/GlobalState';
-import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
+// import { useStoreContext } from '../../utils/GlobalState';
+// import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart, updateCartQuantity } from '../../utils/slice';
 
 function ProductItem(item) {
-  const [state, dispatch] = useStoreContext();
+  // const [state, dispatch] = useStoreContext();
 
   const {
     image,
@@ -17,7 +19,11 @@ function ProductItem(item) {
     quantity
   } = item;
 
-  const { cart } = state;
+  // const { cart } = state;
+  const cart = useSelector(state => state.product.cart)
+
+  const dispatch = useDispatch()
+
 
   const addToCart = () => {
     // find the cart item with the matching id
@@ -25,20 +31,22 @@ function ProductItem(item) {
 
     // if there was a match, call UPDATE w/ a new purchase quantity
     if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
+      dispatch(updateCartQuantity(_id, (itemInCart.purchaseQuantity) + 1))
+      // dispatch({
+      //   type: UPDATE_CART_QUANTITY,
+      //   _id: _id,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      // });
       idbPromise('cart', 'put', {
         ...itemInCart,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       });
     } else {
-      dispatch({
-        type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 }
-      });
+      dispatch(addToCart())
+      // dispatch({
+      //   type: ADD_TO_CART,
+      //   product: { ...item, purchaseQuantity: 1 }
+      // });
       idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
     }
   };

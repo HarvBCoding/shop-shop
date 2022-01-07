@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
-// import { useStoreContext } from '../../utils/GlobalState';
-// import { UPDATE_PRODUCTS } from '../../utils/actions';
-import { useSelector, createSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateProducts } from '../../utils/slice';
 
 import ProductItem from '../ProductItem';
@@ -12,12 +10,9 @@ import { idbPromise } from "../../utils/helpers";
 import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
-  // execute the useStoreContext() function to retrieve the current global state object
-  // const [state, dispatch] = useStoreContext();
-  // destructure the currentCategory data out of the state object
-  // const { currentCategory } = state;
-  const currentCategory = useSelector(state => state.currentCategory)
-  const products = useSelector(state => state.products)
+  // select currentCategiry & products from state
+  const currentCategory = useSelector(state => state.product.currentCategory);
+  const products = useSelector(state => state.product.products)
   const dispatch = useDispatch()
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);

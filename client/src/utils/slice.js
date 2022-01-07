@@ -11,16 +11,16 @@ export const productSlice = createSlice({
     },
     reducers: {
         updateProducts: (state, action) => {
-            state.products = [action.payload]
+            state.products = action.payload
         },
         updateCategories: (state, action) => {
-            state.categories = [action.payload]
+            state.categories = action.payload
         },
         updateCurrentCategory: (state, action) => {
             state.currentCategory = action.payload
         },
         addToCart: (state, action) => {
-            state.cartOpen = true,
+            state.cartOpen = true;
             state.cart = [...state.cart, action.payload]
         },
         addMultipleToCart: (state, action) => {
@@ -31,20 +31,21 @@ export const productSlice = createSlice({
                 return product._id !== action.payload;
             });
 
-            state.cartOpen = newState.length > 0,
+            state.cartOpen = newState.length > 0;
             state.cart = newState
         },
         updateCartQuantity: (state, action) => {
-            state.cartOpen = true,
+            state.cartOpen = true;
             state.cart = state.cart.map((product) => {
-                if (action._id === product._id) {
-                    product.purchaseQuantity = action.payload;
+                const { _id, purchaseQuantity } = action.payload
+                if (_id === product._id) {
+                    product.purchaseQuantity = purchaseQuantity;
                 }
                 return product;
             })
         },
         clearCart: (state) => {
-            state.cartOpen = false,
+            state.cartOpen = false;
             state.cart = []
         },
         toggleCart: (state) => {
@@ -52,8 +53,6 @@ export const productSlice = createSlice({
         }
     }
 });
-
-console.log('slice.js >> line 56 >> productSlice:', productSlice);
 
 // action creators are generated for each case reducer function
 export const { 
