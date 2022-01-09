@@ -19,7 +19,7 @@ export const productSlice = createSlice({
         updateCurrentCategory: (state, action) => {
             state.currentCategory = action.payload
         },
-        addToCart: (state, action) => {
+        addItemToCart: (state, action) => {
             state.cartOpen = true;
             state.cart = [...state.cart, action.payload]
         },
@@ -59,7 +59,7 @@ export const {
     updateProducts, 
     updateCategories, 
     updateCurrentCategory, 
-    addToCart, 
+    addItemToCart, 
     addMultipleToCart, 
     removeFromCart, 
     updateCartQuantity, 
