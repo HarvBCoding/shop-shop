@@ -20,7 +20,8 @@ function ProductItem(item) {
   } = item;
 
   // const { cart } = state;
-  const cart = useSelector(state => state.product.cart);
+  const state = useSelector(state => state.product)
+  const { cart } = state
   
 
   const dispatch = useDispatch()
@@ -33,23 +34,16 @@ function ProductItem(item) {
     // if there was a match, call UPDATE w/ a new purchase quantity
     if (itemInCart) {
       dispatch(updateCartQuantity(_id, (itemInCart.purchaseQuantity) + 1))
-      // dispatch({
-      //   type: UPDATE_CART_QUANTITY,
-      //   _id: _id,
-      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      // });
+
       idbPromise('cart', 'put', {
         ...itemInCart,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       });
     } else {
       dispatch(addItemToCart({ ...item, purchaseQuantity: 1 }) )
-      // dispatch({
-      //   type: ADD_TO_CART,
-      //   product: { ...item, purchaseQuantity: 1 }
-      // });
+
       idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-      console.log(cart)
+      console.log(state);
     }
   };
 
