@@ -21,12 +21,12 @@ export const productSlice = createSlice({
         },
         addItemToCart: (state, action) => {
             state.cartOpen = true;
-            state.cart = [...state.cart, action.payload]
+            state.cart = state.cart.concat(action.payload)
         },
         addMultipleToCart: (state, action) => {
-            state.cart = [...state.cart, action.payload]
+            state.cart = state.cart.concat(action.payload)
         },
-        removeFromCart: (state, action) => {
+        removeItemFromCart: (state, action) => {
             let newState = state.cart.filter((product) => {
                 return product._id !== action.payload;
             });
@@ -48,7 +48,7 @@ export const productSlice = createSlice({
             state.cartOpen = false;
             state.cart = []
         },
-        toggleCart: (state) => {
+        toggleUserCart: (state) => {
             state.cartOpen = !state.cartOpen
         }
     }
@@ -61,9 +61,9 @@ export const {
     updateCurrentCategory, 
     addItemToCart, 
     addMultipleToCart, 
-    removeFromCart, 
+    removeItemFromCart, 
     updateCartQuantity, 
     clearCart, 
-    toggleCart } = productSlice.actions
+    toggleUserCart } = productSlice.actions
 
 export default productSlice.reducer

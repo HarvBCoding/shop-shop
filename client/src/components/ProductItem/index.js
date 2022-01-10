@@ -40,10 +40,9 @@ function ProductItem(item) {
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       });
     } else {
-      dispatch(addItemToCart({ ...item, purchaseQuantity: 1 }) )
+      dispatch(addItemToCart({ ...item, purchaseQuantity: 1 }))
 
       idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-      console.log(state);
     }
   };
 
