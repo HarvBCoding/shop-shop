@@ -80,8 +80,6 @@ const Cart = () => {
       )
   }
 
-  console.log(cart);
-
   return (
     <div className="cart">
     <div className="close" onClick={toggleCart}>[close]</div>
