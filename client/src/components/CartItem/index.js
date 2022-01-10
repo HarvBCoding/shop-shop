@@ -21,8 +21,10 @@ const CartItem = ({ item }) => {
       dispatch(removeItemFromCart(item._id))
 
       idbPromise('cart', 'delete', { ...item });
+
     } else {
       dispatch(updateCartQuantity(item._id, parseInt(value)))
+      console.log('here', value)
 
       idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
     }

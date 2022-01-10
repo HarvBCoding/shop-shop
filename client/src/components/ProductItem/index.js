@@ -3,13 +3,10 @@ import { Link } from "react-router-dom";
 import { pluralize } from "../../utils/helpers";
 import { idbPromise } from "../../utils/helpers";
 
-// import { useStoreContext } from '../../utils/GlobalState';
-// import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItemToCart, updateCartQuantity } from '../../utils/slice';
 
 function ProductItem(item) {
-  // const [state, dispatch] = useStoreContext();
 
   const {
     image,
@@ -19,13 +16,10 @@ function ProductItem(item) {
     quantity
   } = item;
 
-  // const { cart } = state;
   const state = useSelector(state => state.product)
   const { cart } = state
   
-
   const dispatch = useDispatch()
-
 
   const addToCart = () => {
     // find the cart item with the matching id
