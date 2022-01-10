@@ -24,7 +24,6 @@ const CartItem = ({ item }) => {
 
     } else {
       dispatch(updateCartQuantity(item._id, parseInt(value)))
-      console.log('here', value)
 
       idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
     }
