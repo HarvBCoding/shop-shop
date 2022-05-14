@@ -39,7 +39,7 @@ export const productSlice = createSlice({
             state.cart = state.cart.map((product) => {
                 const { _id, purchaseQuantity } = action.payload
                 if (_id === product._id) {
-                    product.purchaseQuantity = purchaseQuantity;
+                    product.purchaseQuantity = purchaseQuantity
                 }
                 return product;
             })
