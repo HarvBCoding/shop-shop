@@ -18,7 +18,7 @@
   ## Usage
   Users are able to window shop and add products to their carts, but will need an account to checkout.
 
-  ![shop-shopscreenshot](client/public/shop-shopscreenshot.png)
+  ![shop-shopscreenshot](https://res.cloudinary.com/dceprxjzq/image/upload/v1652576159/Portfolio/shop-shop.png)
 
   
   ## Technologies
